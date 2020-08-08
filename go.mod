@@ -1,4 +1,4 @@
-module gitlab.com/digipathy/core/mini
+module dp/core/mini
 
 go 1.14
 
