@@ -1,0 +1,26 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "mini-service",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${workspaceFolder}",
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "GOPATH": "${workspaceFolder}/.modules",
+        "DB_ADDR": "",
+        "DB_PORT": "5432",
+        "DB_NAME": "pg_test",
+        "DB_USER": "postgres",
+        "DB_PASS": "123456",
+        "DEBUG": true,
+        "HTTP_PORT": "8989"
+      }
+    }
+  ]
+}
