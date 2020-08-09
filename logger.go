@@ -24,7 +24,7 @@ var xlog *zerolog.Logger
 
 func Log() *zerolog.Logger {
 	if xlog == nil {
-		folderPath := "../logs/"
+		folderPath := "logs/"
 		filePath := folderPath + "output.log"
 		makeSureDirExists(folderPath)
 
