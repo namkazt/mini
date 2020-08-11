@@ -85,3 +85,31 @@ func MustBeInt(v string) int {
 	}
 	return res
 }
+
+func IsMobile(mobile string) bool {
+	l := len(mobile)
+	if l == 0 {
+		return false
+	}
+	isInt := func(in string) bool {
+		_, err := strconv.ParseInt(in, 10, 64)
+		return err == nil
+	}
+	if mobile[0] == '+' && l == 13 {
+		countryCode := mobile[3:]
+		if countryCode != "88" {
+			return false
+		}
+		mobile = "0" + mobile[3:]
+		if !isInt(mobile) {
+			return false
+		}
+		return true
+	} else if mobile[0] == '0' && l == 11 {
+		if !isInt(mobile) {
+			return false
+		}
+		return true
+	}
+	return false
+}
