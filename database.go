@@ -51,6 +51,7 @@ func DB() *gorm.DB {
 			db = db.Set("gorm:auto_preload", true)
 			Log().Info().Msg("Set auto preload mode")
 		}
+		InitializeTime()
 	}
 	if err := db.DB().Ping(); err != nil {
 		Log().Error().Err(err).Msg("ping failed to database")

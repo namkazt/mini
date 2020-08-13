@@ -15,6 +15,24 @@ type Datetime struct {
 	time.Time
 }
 
+var UTC *time.Location
+
+func InitializeTime() {
+	var err error
+	UTC, err = time.LoadLocation("UTC")
+	if err != nil {
+		Log().Error().Err(err).Msg("Can't initialize time")
+	}
+}
+
+func Now() Datetime {
+	return Datetime{Time: time.Now()}
+}
+
+func NowUTC() Datetime {
+	return Datetime{Time: time.Now().In(UTC)}
+}
+
 // Json support
 // ---------------------------------------------
 func (t *Datetime) UnmarshalJSON(b []byte) (err error) {
