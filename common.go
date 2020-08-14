@@ -3,8 +3,10 @@ package mini
 import (
 	"encoding/json"
 	"math"
+	"math/rand"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -112,4 +114,44 @@ func IsMobile(mobile string) bool {
 		return true
 	}
 	return false
+}
+
+const (
+	TL_API_letterBytes   = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	TL_API_numberBytes   = "0123456789"
+	TL_API_letterIdxBits = 6                           // 6 bits to represent a letter index
+	TL_API_letterIdxMask = 1<<TL_API_letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
+	TL_API_letterIdxMax  = 63 / TL_API_letterIdxBits   // # of letter indices fitting in 63 bits
+)
+
+func random(length int, source string) string {
+	//===============================================================================
+	// We using this method:
+	// source: https://stackoverflow.com/questions/22892120/how-to-generate-a-random-string-of-a-fixed-length-in-golang
+	// NOTE:
+	// If using it on multi-threads or goroutine better pass each thread/goroutine 1 Random source
+	// or for simple just add Mutex lock here to lock source when using it.
+	//===============================================================================
+	var TL_API_SRC_RANDOM = rand.NewSource(time.Now().UnixNano())
+	b := make([]byte, length)
+	for i, cache, remain := length-1, TL_API_SRC_RANDOM.Int63(), TL_API_letterIdxMax; i >= 0; {
+		if remain == 0 {
+			cache, remain = TL_API_SRC_RANDOM.Int63(), TL_API_letterIdxMax
+		}
+		if idx := int(cache & TL_API_letterIdxMask); idx < len(source) {
+			b[i] = source[idx]
+			i--
+		}
+		cache >>= TL_API_letterIdxBits
+		remain--
+	}
+	return string(b)
+}
+
+func RandomString(length int) string {
+	return random(length, TL_API_letterBytes)
+}
+
+func RandomNumber(length int) string {
+	return random(length, TL_API_numberBytes)
 }
