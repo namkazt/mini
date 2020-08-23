@@ -2,6 +2,7 @@ package mini
 
 import (
 	"encoding/json"
+	"fmt"
 	"math"
 	"math/rand"
 	"reflect"
@@ -86,6 +87,18 @@ func MustBeInt(v string) int {
 		return 0
 	}
 	return res
+}
+
+func NormalizeMobile(mobile string) (string, error) {
+	if !IsMobile(mobile) {
+		return "", fmt.Errorf("Mobile input is invalid")
+	}
+	if mobile[0] == '+' {
+		return "0" + mobile[3:], nil
+	} else if mobile[0] == '0' {
+		return mobile, nil
+	}
+	return "", fmt.Errorf("Mobile input is invalid")
 }
 
 func IsMobile(mobile string) bool {
