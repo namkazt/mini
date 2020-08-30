@@ -1,4 +1,4 @@
-module gitlab.com/digipathy/core/mini.git
+module github.com/namkazt/mini
 
 go 1.14
 
