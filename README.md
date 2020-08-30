@@ -75,4 +75,26 @@ func editUser(c echo.Context) error {
 }
 ```
 
+### Compute fields support for GORM
+
+```go
+type ModelUserTest struct {
+	mini.ModelBase
+
+	FullName     string `gorm:"not null;" json:"full_name" validate:"required"`
+	RandomNumber int    `gorm:"-" json:"random_num" compute:"ComputeRandomNumber"`
+}
+
+func (m *ModelUserTest) ComputeRandomNumber() {
+	m.RandomNumber = rand.Int()
+}
+
+func apiHandleSomething() {
+	a := &ModelUserTest{}
+	mini.Compute(a)
+}
+
+```
+
+
 ### And something else who know
